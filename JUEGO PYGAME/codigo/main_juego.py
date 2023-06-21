@@ -21,7 +21,7 @@ pygame.init()
 
 pygame.mixer.init()
 #SONIDOS
-musica_fondo = pygame.mixer.Sound("sonidos\music_fondo.mp3")
+musica_fondo = pygame.mixer.Sound("JUEGO PYGAME\sonidos\music_fondo.mp3")
 musica_fondo.play(-1)
 musica_fondo.set_volume(0.2)
 
@@ -49,7 +49,7 @@ enemigos_colisionados = []  # Lista para almacenar las naves enemigas con las qu
 flag_mostrar_menu = True
 flag_no_mostrar_juego = False
 flag_fin_juego = False
-flag_ranking = False#Borrador
+flag_ranking = False
 flag_ventana_ingresar_nombre = True
 
 lista_nombre = []
@@ -108,15 +108,13 @@ while True:
                     print("Datos guardados")
                     print(ventana_ingresar_nombre.ingreso)
                     print(score.acumulador_puntos)
-                    
-                    insertar_datos(ventana_ingresar_nombre.guardar_nombre, score.acumulador_puntos)
 
+                    insertar_datos(ventana_ingresar_nombre.guardar_nombre, score.acumulador_puntos)
                     #vacio las listas
                     lista_puntajes[:] = []
                     lista_nombre[:] = []
-
-                    mostrar_datos_ranking(lista_nombre, lista_puntajes)
-                                        
+                    #####################################################################
+                    mostrar_datos_ranking(lista_nombre, lista_puntajes)                                        
                     #ordena bien los puntajes de mayor a menor
                     if len(lista_puntajes) >= 2:
                         for i in range(len(lista_puntajes)-1):
@@ -145,7 +143,7 @@ while True:
                     elif len(lista_puntajes) == 2:
                         ventana_ranking.nombre_segundo_puesto = lista_nombre[1]
                         ventana_ranking.puntaje_segundo_puesto = lista_puntajes[1]
-
+                    #####################################################################
 
                 if ventana_ranking.rect_image_salir_ranking.collidepoint(mouse_x, mouse_y):
                     flag_ranking = False

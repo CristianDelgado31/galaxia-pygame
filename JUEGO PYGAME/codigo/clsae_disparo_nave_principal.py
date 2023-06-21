@@ -10,7 +10,7 @@ class Disparo:
         self.rect_bala = pygame.Rect(x, y, 3, 20)  # Crea un rectángulo para representar el disparo
         self.flag = True
         self.flag_score = False
-        self.sonido_explosion = pygame.mixer.Sound("sonidos\explosion.mp3")
+        self.sonido_explosion = pygame.mixer.Sound("JUEGO PYGAME\sonidos\explosion.mp3")
         self.sonido_explosion.set_volume(0.1)
 
     def update(self, screen):

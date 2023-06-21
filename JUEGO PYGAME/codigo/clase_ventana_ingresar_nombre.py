@@ -9,7 +9,7 @@ class VentanaIngreseNombre:
         self.ingreso_rect = pygame.Rect(300,300,200,50)
         #self.font_input_surface = self.font_input.render(self.ingreso, True, BLACK)
         #imagen boton play
-        self.imagen_boton_play = pygame.image.load("imagenes\\boton_play.png")
+        self.imagen_boton_play = pygame.image.load("JUEGO PYGAME\imagenes\\boton_play.png")
         self.imagen_boton_play = pygame.transform.scale(self.imagen_boton_play,(100,100))
         self.rect_image_boton_play = self.imagen_boton_play.get_rect()
         self.rect_image_boton_play.y = 500

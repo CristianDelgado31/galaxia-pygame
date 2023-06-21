@@ -8,7 +8,7 @@ from clase_disparo_nave_enemiga import *
 
 class NaveEnemiga:
     def __init__(self,x, y, ancho, alto):
-        self.image_nave_enemiga = pygame.image.load("imagenes\\naveEnemigaa.png")
+        self.image_nave_enemiga = pygame.image.load("JUEGO PYGAME\imagenes\\naveEnemigaa.png")
         self.image_nave_enemiga = pygame.transform.scale(self.image_nave_enemiga,(ancho,alto))
         self.rect_imagen_enemiga = self.image_nave_enemiga.get_rect()
         self.rect_imagen_enemiga.y = y
@@ -45,7 +45,7 @@ class NaveEnemiga:
         if random.randrange(0,200) == 11 and self.rect_imagen_enemiga.y >= 0:
             disparo_enemigo = DisparoEnemigo(x, y)  # Crea una instancia de Disparo en la posición de la nave
             lista_balas_enemigas.append(disparo_enemigo)  # Agrega el disparo a la lista
-            self.sonido_disparo = pygame.mixer.Sound("sonidos\SpaceLaserShot.wav")
+            self.sonido_disparo = pygame.mixer.Sound("JUEGO PYGAME\sonidos\SpaceLaserShot.wav")
             self.sonido_disparo.set_volume(0.2)
             self.sonido_disparo.play()
 

@@ -8,7 +8,7 @@ disparos = []
 
 class Nave:
     def __init__(self):
-        self.image = pygame.image.load("imagenes\\nave1.png") # Carga la imagen de la nave
+        self.image = pygame.image.load("JUEGO PYGAME\imagenes\\nave1.png") # Carga la imagen de la nave
         self.image = pygame.transform.scale(self.image,(40,40))
         self.posicion = (ANCHO_VENTANA/2,ALTO_VENTANA)
         self.rect = self.image.get_rect(midbottom = self.posicion)
@@ -20,7 +20,7 @@ class Nave:
         self.laser_time = 0
         self.laser_cooldown = 400
         self.collision_detected = False
-        self.sonido_explosion = pygame.mixer.Sound("sonidos\explosion.mp3")
+        self.sonido_explosion = pygame.mixer.Sound("JUEGO PYGAME\sonidos\explosion.mp3")
         self.sonido_explosion.set_volume(0.1)
     
 
