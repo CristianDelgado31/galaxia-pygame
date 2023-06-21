@@ -25,20 +25,14 @@ class Fondo:
 class FondoGameOver(Fondo):
     def __init__(self) -> None:
         super().__init__()
-        #imagen calavera
-        """self.imagen_fondo = pygame.image.load("imagenes\\calavera.png")#imagen de prueba
-        self.imagen_fondo = pygame.transform.scale(self.imagen_fondo,(400,400))
-        self.rect_fondo = self.imagen_fondo.get_rect()
-        self.rect_fondo.x = 200
-        self.rect_fondo.y = 50"""
         #imagen game over
-        self.image_game_over = pygame.image.load("imagenes\\game_over2.png")#imagen de prueba game over
+        self.image_game_over = pygame.image.load("imagenes\\game_over2.png")
         self.image_game_over = pygame.transform.scale(self.image_game_over,(500,500))
         self.rect_fondo_game_over = self.image_game_over.get_rect()
         self.rect_fondo_game_over.x = 150
         self.rect_fondo_game_over.y = -100
         #imagen volver a inicio
-        self.image_volver_menu = pygame.image.load("imagenes\\volver_al_menu.png")#imagen de prueba game over
+        self.image_volver_menu = pygame.image.load("imagenes\\volver_al_menu.png")
         self.image_volver_menu = pygame.transform.scale(self.image_volver_menu,(100,100))
         self.rect_image_volver_menu = self.image_volver_menu.get_rect()
         self.rect_image_volver_menu.x = 360
@@ -51,7 +45,6 @@ class FondoGameOver(Fondo):
     def draw(self):
         screen.blit(self.image_game_over, self.rect_fondo_game_over)
         screen.blit(self.image_volver_menu, self.rect_image_volver_menu)
-        #screen.blit(self.imagen_fondo, self.rect_fondo)
         #texto
         screen.blit(self.text_volver_inicio, (210, 345))
 
@@ -61,7 +54,6 @@ class Menu(Fondo):
         #imagen marco start
         self.imagen_marco_start = pygame.image.load("imagenes\\marco_gamer.png")
         self.imagen_marco_start = pygame.transform.scale(self.imagen_marco_start,(300,100))
-        #self.imagen_marco = pygame.transform.rotate(self.imagen_marco, 1)
         #imagen y rect de marco start
         self.rect_marco_start = self.imagen_marco_start.get_rect()
         self.rect_marco_start.x = 260
@@ -88,7 +80,6 @@ class Menu(Fondo):
 
     def draw(self):
         screen.blit(self.imagen_fondo, self.rect_fondo)
-        #pygame.draw.rect(screen, (255, 0, 0), self.rect_start)
         #GALAXIA
         screen.blit(self.texto_galaxia, (self.x, self.y))
         #marcos
@@ -154,7 +145,6 @@ class VentanaIngreseNombre:
         self.font_input_nombre = pygame.font.SysFont("Arial", 30)
         self.ingreso = ''
         self.ingreso_rect = pygame.Rect(300,300,200,50)
-        #self.font_input_surface = self.font_input.render(self.ingreso, True, BLACK)
         #imagen boton play
         self.imagen_boton_play = pygame.image.load("imagenes\\boton_play.png")
         self.imagen_boton_play = pygame.transform.scale(self.imagen_boton_play,(100,100))
@@ -169,7 +159,6 @@ class VentanaIngreseNombre:
         self.flag_nombre = False
 
     def draw(self):
-        #if self.flag_nombre == False:
         pygame.draw.rect(screen, COLOR_BLANCO, self.ingreso_rect)
         self.font_input_surface = self.font_input_nombre.render(self.ingreso, True, BLACK)
         screen.blit(self.font_input_surface, (self.ingreso_rect.x + 5, self.ingreso_rect.y + 5))
@@ -195,7 +184,6 @@ class Nave:
         self.image = pygame.transform.scale(self.image,(40,40))
         self.posicion = (ANCHO_VENTANA/2,ALTO_VENTANA)
         self.rect = self.image.get_rect(midbottom = self.posicion)
-        #self.rect.center = (400, 770)  # Posición inicial de la nave
         self.velocidad_nave = 5
         self.max_restriccion = ANCHO_VENTANA
         #enfriamiento
@@ -206,7 +194,7 @@ class Nave:
     
 
     def update(self):
-        # Aquí iría la lógica de movimiento de la nave
+        # Aca iría la lógica de movimiento de la nave
         self.interacciones()
         self.restriccion()
         self.recarga()
@@ -237,7 +225,6 @@ class Nave:
             sonido_disparo.play()
 
     def draw(self):
-        #pygame.draw.rect(screen,(COLOR_AMARILLO),self.rect)
         screen.blit(self.image, self.rect)
         
     def restriccion(self):
@@ -340,7 +327,7 @@ class NaveEnemiga:
         self.rect_imagen_enemiga.y = y
         self.rect_imagen_enemiga.x = x
         self.flag_nave_enemiga = True
-        self.posicion_orientacion = 5 #recomendado 5
+        self.posicion_orientacion = 5
         
     def update_enemigo(self):
         if self.flag_nave_enemiga:
@@ -355,7 +342,6 @@ class NaveEnemiga:
              
 
     def mostrar_naves_enemigas(self):
-        #pygame.draw.rect(screen,(COLOR_BLANCO),self.rect_imagen_enemiga)
         screen.blit(self.image_nave_enemiga,self.rect_imagen_enemiga)
 
 
@@ -377,7 +363,7 @@ class NaveEnemiga:
 lista_naves_enemigas = []
 
 def crear_naves_enemigas(cantidad):
-    for i in range(cantidad):#recomendado 20
+    for i in range(cantidad):
         lista_naves_enemigas.append(NaveEnemiga(random.randrange(30,700), random.randrange(2000)*-1, 30, 30))#recomendado 2000 en randrange
         
 
@@ -389,7 +375,7 @@ crear_naves_enemigas(cantidad_naves_enemigas)
 ########################################################################################################################################################
 
 #Balas enemigas
-class DisparoEnemigo:#Puedo mejorarlo si uso herencia // CAMBIARLO DESPUES!!
+class DisparoEnemigo:#Puedo mejorarlo si uso herencia //
     def __init__(self, x, y):
         self.rect_bala_enemiga = pygame.Rect(x, y, 3, 20)
         self.flag = True
@@ -398,7 +384,6 @@ class DisparoEnemigo:#Puedo mejorarlo si uso herencia // CAMBIARLO DESPUES!!
     def update(self):
         if self.flag:
             self.rect_bala_enemiga.y += 8  # Mueve el disparo hacia abajo
-        #self.verificar_colision()
         self.draw()
         self.restriccion_bala()
 
@@ -480,7 +465,7 @@ class Nivel:
     def actualizar_nivel(self):
         if score.value >= 500 and score.value < 1500:
             self.nivel = 2
-        if score.value >= 1500 and score.value < 3500:#ERROR EN EL NIVEL 2 
+        if score.value >= 1500 and score.value < 3500:
             self.nivel = 3
         if score.value >= 3500 and score.value < 6000:
             self.nivel = 4
@@ -528,13 +513,11 @@ enemigos_colisionados = []  # Lista para almacenar las naves enemigas con las qu
 #BANDERAS PARA DISTINTA UBICACION DEL JUEGO
 flag_mostrar_menu = True
 flag_no_mostrar_juego = False
-flag_fin_juego = False
-flag_ranking = False#Borrador
+flag_ranking = False
 flag_ventana_ingresar_nombre = True
 
 lista_nombre = []
 lista_puntajes = []
-contador_puestos = 0
 
 #score_jugador
 def score_jugador(score):
@@ -554,7 +537,6 @@ while True:
                         flag_mostrar_menu = False
                         score.acumulador_puntos = 0#puntos totales de la ultima partida
                         ventana_ingresar_nombre.ingreso = ''
-                        #print(score.acumulador_puntos)#verifico si esta en 0 de nuevo
 
                         #reubico el rect de volver al menu en la ventana game over
                         fondo_game_over.rect_image_volver_menu.y = -1000
@@ -586,17 +568,16 @@ while True:
                     fondo_menu.rect_marco_ranking.y = 520
                     #Buen lugar para guardar los datos creo
                     print("Saliendo de game over e ingresando a menú")
-                    print("Datos guardados")
-                    print(ventana_ingresar_nombre.ingreso)
-                    print(score.acumulador_puntos)
                     
                     insertar_datos(ventana_ingresar_nombre.guardar_nombre, score.acumulador_puntos)
 
+                    #vacio las listas
+                    lista_puntajes[:] = []
+                    lista_nombre[:] = []
+
                     mostrar_datos_ranking(lista_nombre, lista_puntajes)
-                    #print(lista_puntajes)
-                    
-                    
-                    #print(lista_puntajes)                       
+
+                                      
                     #ordena bien los puntajes de mayor a menor
                     if len(lista_puntajes) >= 2:
                         for i in range(len(lista_puntajes)-1):
@@ -610,30 +591,22 @@ while True:
                                     lista_nombre[i] = lista_nombre[j]
                                     lista_nombre[j] = aux_nombre
 
-                    print(lista_puntajes)
-                    print(lista_nombre)
 
-                #actualizar_ranking
+                    #actualizar_ranking
                     ventana_ranking.nombre_primer_puesto = lista_nombre[0]
                     ventana_ranking.puntaje_primer_puesto = lista_puntajes[0]
 
-                    if len(lista_puntajes) > 3:
+                    if len(lista_puntajes) >= 3:
                         ventana_ranking.nombre_segundo_puesto = lista_nombre[1]
                         ventana_ranking.puntaje_segundo_puesto = lista_puntajes[1]
 
                         ventana_ranking.nombre_tercer_puesto = lista_nombre[2]
                         ventana_ranking.puntaje_tercer_puesto = lista_puntajes[2]
 
-                    elif len(lista_puntajes) == 3:
+                    elif len(lista_puntajes) == 2:
                         ventana_ranking.nombre_segundo_puesto = lista_nombre[1]
                         ventana_ranking.puntaje_segundo_puesto = lista_puntajes[1]
 
-                    #print(lista_nombre)
-                    #print(lista_puntajes)
-                    #contador_puestos+=1
-
-                    #print(ventana_ranking.nombre_primer_puesto)
-                    #print(ventana_ranking.puntaje_primer_puesto)
 
                 if ventana_ranking.rect_image_salir_ranking.collidepoint(mouse_x, mouse_y):
                     flag_ranking = False
@@ -652,15 +625,13 @@ while True:
 
         #condicion para escribir el nombre en una ventana desp de darle start
         if event.type == pygame.KEYDOWN:
-            #flag_mostrar_menu == False and flag_no_mostrar_juego == False and flag_ranking == True and 
             if event.key == pygame.K_BACKSPACE:
                 ventana_ingresar_nombre.ingreso = ventana_ingresar_nombre.ingreso[0:-1]
             else:
                 ventana_ingresar_nombre.ingreso += event.unicode
 
     #mostrar MENU
-    if flag_mostrar_menu == True and flag_ranking == False and flag_no_mostrar_juego == False:#and flag_ranking == False puedo agregar esto quizas
-        #screen.fill((COLOR_BLANCO))
+    if flag_mostrar_menu == True and flag_ranking == False and flag_no_mostrar_juego == False:
         fondo_menu.draw()
         pygame.display.flip()
     
@@ -674,7 +645,6 @@ while True:
     elif flag_ventana_ingresar_nombre == True and flag_mostrar_menu == False:
         screen.fill((GRIS))
         ventana_ingresar_nombre.update()
-        #print(ventana_ingresar_nombre.ingreso)
         pygame.display.flip()
 
     #mostrar JUEGO
@@ -686,9 +656,6 @@ while True:
                 enemigos_colisionados.append(enemigos)  # Agrega el enemigo a la lista de colisiones
                 lives -= 1  # Resta una vida
 
-        #Opcional
-        # Limpia la lista de colisiones para eliminar enemigos que ya no están colisionando con la nave principal
-        #enemigos_colisionados = [enemy for enemy in enemigos_colisionados if enemy.rect_imagen_enemiga.colliderect(game.rect)]
 
         nivel.actualizar_nivel()
 
@@ -745,7 +712,7 @@ while True:
     
     elif flag_no_mostrar_juego == True:
         screen.fill((COLOR_BLANCO))
-        #mando a la mierda el marco de ranking
+        #mando lejos el marco de ranking
         fondo_menu.rect_marco_ranking.y = -1000
 
         fondo_game_over.draw()
