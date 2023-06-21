@@ -14,7 +14,7 @@ ALTO_VENTANA = 800
 class Fondo:
     def __init__(self) -> None:
         #Fondo
-        self.imagen_fondo = pygame.image.load("imagenes\\fondo.png")
+        self.imagen_fondo = pygame.image.load("JUEGO PYGAME\imagenes\\fondo.png")
         self.image = pygame.transform.scale(self.imagen_fondo,(ANCHO_VENTANA,ALTO_VENTANA))
         self.rect_fondo = self.imagen_fondo.get_rect()
 
@@ -26,13 +26,13 @@ class FondoGameOver(Fondo):
     def __init__(self) -> None:
         super().__init__()
         #imagen game over
-        self.image_game_over = pygame.image.load("imagenes\\game_over2.png")
+        self.image_game_over = pygame.image.load("JUEGO PYGAME\imagenes\\game_over2.png")
         self.image_game_over = pygame.transform.scale(self.image_game_over,(500,500))
         self.rect_fondo_game_over = self.image_game_over.get_rect()
         self.rect_fondo_game_over.x = 150
         self.rect_fondo_game_over.y = -100
         #imagen volver a inicio
-        self.image_volver_menu = pygame.image.load("imagenes\\volver_al_menu.png")
+        self.image_volver_menu = pygame.image.load("JUEGO PYGAME\imagenes\\volver_al_menu.png")
         self.image_volver_menu = pygame.transform.scale(self.image_volver_menu,(100,100))
         self.rect_image_volver_menu = self.image_volver_menu.get_rect()
         self.rect_image_volver_menu.x = 360
@@ -52,14 +52,14 @@ class Menu(Fondo):
     def __init__(self) -> None:
         super().__init__()
         #imagen marco start
-        self.imagen_marco_start = pygame.image.load("imagenes\\marco_gamer.png")
+        self.imagen_marco_start = pygame.image.load("JUEGO PYGAME\imagenes\\marco_gamer.png")
         self.imagen_marco_start = pygame.transform.scale(self.imagen_marco_start,(300,100))
         #imagen y rect de marco start
         self.rect_marco_start = self.imagen_marco_start.get_rect()
         self.rect_marco_start.x = 260
         self.rect_marco_start.y = 350
         #imagen y rect de marco ranking
-        self.imagen_marco_ranking = pygame.image.load("imagenes\\marco_gamer.png")
+        self.imagen_marco_ranking = pygame.image.load("JUEGO PYGAME\imagenes\\marco_gamer.png")
         self.imagen_marco_ranking = pygame.transform.scale(self.imagen_marco_ranking,(300,100))
         self.rect_marco_ranking = self.imagen_marco_ranking.get_rect()
         self.rect_marco_ranking.x = 260
@@ -92,13 +92,13 @@ class Menu(Fondo):
 
 class Ranking:
     def __init__(self) -> None:
-        self.image_salir_de_ranking = pygame.image.load("imagenes\\retroceder_del_ranking.png")
+        self.image_salir_de_ranking = pygame.image.load("JUEGO PYGAME\imagenes\\retroceder_del_ranking.png")
         self.image_salir_de_ranking = pygame.transform.scale(self.image_salir_de_ranking,(100,100))
         self.rect_image_salir_ranking = self.image_salir_de_ranking.get_rect()
         self.rect_image_salir_ranking.y = -1000
         self.rect_image_salir_ranking.x = 0
         ##puestos ranking
-        self.image_puestos_ranking = pygame.image.load("imagenes\puestos_rank.png")
+        self.image_puestos_ranking = pygame.image.load("JUEGO PYGAME\imagenes\puestos_rank.png")
         self.image_puestos_ranking = pygame.transform.scale(self.image_puestos_ranking,(600,600))
         self.rect_image_puestos_ranking = self.image_puestos_ranking.get_rect()
         self.rect_image_puestos_ranking.y = 200
@@ -146,7 +146,7 @@ class VentanaIngreseNombre:
         self.ingreso = ''
         self.ingreso_rect = pygame.Rect(300,300,200,50)
         #imagen boton play
-        self.imagen_boton_play = pygame.image.load("imagenes\\boton_play.png")
+        self.imagen_boton_play = pygame.image.load("JUEGO PYGAME\imagenes\\boton_play.png")
         self.imagen_boton_play = pygame.transform.scale(self.imagen_boton_play,(100,100))
         self.rect_image_boton_play = self.imagen_boton_play.get_rect()
         self.rect_image_boton_play.y = 500
@@ -180,7 +180,7 @@ class VentanaIngreseNombre:
 
 class Nave:
     def __init__(self):
-        self.image = pygame.image.load("imagenes\\nave1.png") # Carga la imagen de la nave
+        self.image = pygame.image.load("JUEGO PYGAME\imagenes\\nave1.png") # Carga la imagen de la nave
         self.image = pygame.transform.scale(self.image,(40,40))
         self.posicion = (ANCHO_VENTANA/2,ALTO_VENTANA)
         self.rect = self.image.get_rect(midbottom = self.posicion)
@@ -240,7 +240,7 @@ class Nave:
 class Vidas:
     def __init__(self, x, y, ancho, alto):
         #vidas
-        self.vidas = pygame.image.load("imagenes\\vidas.png")
+        self.vidas = pygame.image.load("JUEGO PYGAME\imagenes\\vidas.png")
         self.vidas = pygame.transform.scale(self.vidas,(ancho,alto))
         self.posicion_rect_vidas = (x,y)
         self.rect_vidas = self.vidas.get_rect(midbottom = self.posicion_rect_vidas)
@@ -321,7 +321,7 @@ disparos = []
 #Nave enemiga
 class NaveEnemiga:
     def __init__(self,x, y, ancho, alto):
-        self.image_nave_enemiga = pygame.image.load("imagenes\\naveEnemigaa.png")
+        self.image_nave_enemiga = pygame.image.load("JUEGO PYGAME\imagenes\\naveEnemigaa.png")
         self.image_nave_enemiga = pygame.transform.scale(self.image_nave_enemiga,(ancho,alto))
         self.rect_imagen_enemiga = self.image_nave_enemiga.get_rect()
         self.rect_imagen_enemiga.y = y
@@ -480,14 +480,14 @@ pygame.init()
 
 pygame.mixer.init()
 #SONIDOS
-musica_fondo = pygame.mixer.Sound("sonidos\music_fondo.mp3")
+musica_fondo = pygame.mixer.Sound("JUEGO PYGAME\sonidos\music_fondo.mp3")
 musica_fondo.play(-1)
 musica_fondo.set_volume(0.2)
 #
-sonido_disparo = pygame.mixer.Sound("sonidos\SpaceLaserShot.wav")
+sonido_disparo = pygame.mixer.Sound("JUEGO PYGAME\sonidos\SpaceLaserShot.wav")
 sonido_disparo.set_volume(0.2)
 #
-sonido_explosion = pygame.mixer.Sound("sonidos\explosion.mp3")
+sonido_explosion = pygame.mixer.Sound("JUEGO PYGAME\sonidos\explosion.mp3")
 sonido_explosion.set_volume(0.1)
 
 screen = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
