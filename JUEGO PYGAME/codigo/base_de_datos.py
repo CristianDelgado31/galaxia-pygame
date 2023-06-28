@@ -34,5 +34,3 @@ def mostrar_datos_ranking(lista_nombre, lista_puntajes):
             lista_nombre.append(fila[0])
             lista_puntajes.append(fila[1])
 
-#Añadir mas imagenes para que se vea bonito el juego
-#Solcionar el error del order DESC de SQLite
