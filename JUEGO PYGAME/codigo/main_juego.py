@@ -17,46 +17,73 @@ from clsae_disparo_nave_principal import *
 from funciones_vida import *
 
 
+class Game:
+    def __init__(self) -> None:
+        self.fondo_juego = Fondo()
+        self.fondo_menu = Menu()
+        self.nave_jugador = NaveJugador()
+        self.fondo_game_over = FondoGameOver()
+        self.ventana_ingresar_nombre = VentanaIngreseNombre()
+        self.ventana_ranking = Ranking()
+        self.score = Score(10, 10)
+        self.nivel = Nivel(ANCHO_VENTANA/2,10)
+        self.lives = 4
+        self.enemigos_colisionados = []
+        self.lista_nombre = []
+        self.lista_puntajes = []
+        self.lista_nombre = []
+        self.lista_puntajes = []
+        self.flag_mostrar_menu = True
+        self.flag_no_mostrar_juego = False
+        self.flag_ranking = False
+        self.flag_ventana_ingresar_nombre = True
+
+    def reiniciar_valores(self):
+        if game.lives <= 1 or game.score.value == 7000:
+            game.fondo_game_over.rect_image_volver_menu.y = 630
+            game.flag_no_mostrar_juego = True
+            game.lives = 4
+            game.score.value = 0
+            game.enemigos_colisionados[:] = []
+            game.nivel.nivel = 1
+            lista_naves_enemigas[:] = []
+            lista_balas_enemigas[:] = []
+            disparos[:] = []
+            for vida in lista_vidas:
+                vida.flag_vida = True
+            cantidad_naves_enemigas = 5
+            crear_naves_enemigas(cantidad_naves_enemigas)
+            game.nave_jugador.rect.x = (ANCHO_VENTANA/2)
+    def actualizar_ranking(self, lista_nombres, lista_puntajes):
+        game.ventana_ranking.nombre_primer_puesto = lista_nombres[0]
+        game.ventana_ranking.puntaje_primer_puesto = lista_puntajes[0]
+        if len(lista_puntajes) >= 3:
+            game.ventana_ranking.nombre_segundo_puesto = lista_nombres[1]
+            game.ventana_ranking.puntaje_segundo_puesto = lista_puntajes[1]
+            game.ventana_ranking.nombre_tercer_puesto = lista_nombres[2]
+            game.ventana_ranking.puntaje_tercer_puesto = game.lista_puntajes[2]
+        elif len(lista_puntajes) == 2:
+            game.ventana_ranking.nombre_segundo_puesto = lista_nombres[1]
+            game.ventana_ranking.puntaje_segundo_puesto = lista_puntajes[1]
+
+
 pygame.init()
 
 pygame.mixer.init()
 #SONIDOS
-musica_fondo = pygame.mixer.Sound("JUEGO PYGAME\sonidos\music_fondo.mp3")
+musica_fondo = pygame.mixer.Sound("sonidos\music_fondo.mp3")
 musica_fondo.play(-1)
 musica_fondo.set_volume(0.2)
 
 screen = pygame.display.set_mode((ANCHO_VENTANA, ALTO_VENTANA))
-pygame.display.set_caption("Mejor juego de galaxia")
+pygame.display.set_caption("Juego galaxia")
 #TIEMPO
 clock = pygame.time.Clock()
-#CLASES
-fondo = Fondo()
-fondo_menu = Menu()
-game = Nave()
-fondo_game_over = FondoGameOver()
-ventana_ingresar_nombre = VentanaIngreseNombre()
-ventana_ranking = Ranking()
-#SCORE
-score = Score(10, 10)
-#NIVEL
-nivel = Nivel(ANCHO_VENTANA/2,10)
 
-#VIDAS
-lives = 4  # Cantidad inicial de vidas
-enemigos_colisionados = []  # Lista para almacenar las naves enemigas con las que ha colisionado la nave principal
-
-#BANDERAS PARA DISTINTA UBICACION DEL JUEGO
-flag_mostrar_menu = True
-flag_no_mostrar_juego = False
-flag_fin_juego = False
-flag_ranking = False
-flag_ventana_ingresar_nombre = True
-
-lista_nombre = []
-lista_puntajes = []
+game = Game()
 
 #score_jugador
-def score_jugador(score):
+def score_jugador(score):#borrador
     print(score)
 
 while True:
@@ -68,144 +95,122 @@ while True:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
                 mouse_x, mouse_y = event.pos
-                if fondo_menu.rect_marco_start.collidepoint(mouse_x, mouse_y):
-                    if flag_mostrar_menu == True and flag_no_mostrar_juego == False:
-                        flag_mostrar_menu = False
-                        score.acumulador_puntos = 0#puntos totales de la ultima partida
-                        ventana_ingresar_nombre.ingreso = ''
-                        #print(score.acumulador_puntos)#verifico si esta en 0 de nuevo
+                if game.fondo_menu.rect_marco_start.collidepoint(mouse_x, mouse_y):
+                    if game.flag_mostrar_menu == True and game.flag_no_mostrar_juego == False:
+                        game.flag_mostrar_menu = False
+                        game.score.acumulador_puntos = 0 # reinicio acumulador de puntos
+                        game.ventana_ingresar_nombre.ingreso = ''
 
                         #reubico el rect de volver al menu en la ventana game over
-                        fondo_game_over.rect_image_volver_menu.y = -1000
-                        fondo_menu.rect_marco_ranking.y = -1000
-                        ventana_ingresar_nombre.rect_image_boton_play.y = 500
+                        game.fondo_game_over.rect_image_volver_menu.y = -1000
+                        game.fondo_menu.rect_marco_ranking.y = -1000
+                        game.ventana_ingresar_nombre.rect_image_boton_play.y = 500
 
 
-                if fondo_menu.rect_marco_ranking.collidepoint(mouse_x, mouse_y):
+                if game.fondo_menu.rect_marco_ranking.collidepoint(mouse_x, mouse_y):
                     # Se ha producido una colisión
                     print("Ingreso a ranking")
                     #print(score.acumulador_puntos)#puedo mandar los datos a una base de datos
-                    flag_no_mostrar_juego = True
-                    flag_mostrar_menu = False
-                    flag_ranking = True
+                    game.flag_no_mostrar_juego = True
+                    game.flag_mostrar_menu = False
+                    game.flag_ranking = True
 
                     #desp los devuelvo a su posicion con una colision dentro de ventana ranking
-                    fondo_game_over.rect_image_volver_menu.y = -1000
-                    fondo_menu.rect_marco_ranking.y = -1000
+                    game.fondo_game_over.rect_image_volver_menu.y = -1000
+                    game.fondo_menu.rect_marco_ranking.y = -1000
                     #salir de ranking
-                    ventana_ranking.rect_image_salir_ranking.y = 0
+                    game.ventana_ranking.rect_image_salir_ranking.y = 0
 
 
-                if fondo_game_over.rect_image_volver_menu.collidepoint(mouse_x, mouse_y):
-                    flag_mostrar_menu = True
-                    flag_no_mostrar_juego = False
-                    flag_ranking = False
-                    flag_ventana_ingresar_nombre = True
+                if game.fondo_game_over.rect_image_volver_menu.collidepoint(mouse_x, mouse_y):
+                    game.flag_mostrar_menu = True
+                    game.flag_no_mostrar_juego = False
+                    game.flag_ranking = False
+                    game.flag_ventana_ingresar_nombre = True
                     #posiciono de nuevo a marco ranking
-                    fondo_menu.rect_marco_ranking.y = 520
+                    game.fondo_menu.rect_marco_ranking.y = 520
                     #Buen lugar para guardar los datos creo
                     print("Saliendo de game over e ingresando a menú")
                     print("Datos guardados")
-                    print(ventana_ingresar_nombre.ingreso)
-                    print(score.acumulador_puntos)
+                    
+                    insertar_datos(game.ventana_ingresar_nombre.guardar_nombre, game.score.acumulador_puntos)
 
-                    insertar_datos(ventana_ingresar_nombre.guardar_nombre, score.acumulador_puntos)
                     #vacio las listas
-                    lista_puntajes[:] = []
-                    lista_nombre[:] = []
-                    #####################################################################
-                    mostrar_datos_ranking(lista_nombre, lista_puntajes)                                        
+                    game.lista_puntajes[:] = []
+                    game.lista_nombre[:] = []
+
+                    mostrar_datos_ranking(game.lista_nombre, game.lista_puntajes)
 
                     #actualizar_ranking
-                    ventana_ranking.nombre_primer_puesto = lista_nombre[0]
-                    ventana_ranking.puntaje_primer_puesto = lista_puntajes[0]
+                    game.actualizar_ranking(game.lista_nombre, game.lista_puntajes)
 
-                    if len(lista_puntajes) >= 3:
-                        ventana_ranking.nombre_segundo_puesto = lista_nombre[1]
-                        ventana_ranking.puntaje_segundo_puesto = lista_puntajes[1]
 
-                        ventana_ranking.nombre_tercer_puesto = lista_nombre[2]
-                        ventana_ranking.puntaje_tercer_puesto = lista_puntajes[2]
-
-                    elif len(lista_puntajes) == 2:
-                        ventana_ranking.nombre_segundo_puesto = lista_nombre[1]
-                        ventana_ranking.puntaje_segundo_puesto = lista_puntajes[1]
-                    #####################################################################
-
-                if ventana_ranking.rect_image_salir_ranking.collidepoint(mouse_x, mouse_y):
-                    flag_ranking = False
-                    flag_no_mostrar_juego = False
-                    flag_mostrar_menu = True
-                    ventana_ranking.rect_image_salir_ranking.y = -1000
-                    fondo_menu.rect_marco_ranking.y = 520
+                if game.ventana_ranking.rect_image_salir_ranking.collidepoint(mouse_x, mouse_y):
+                    game.flag_ranking = False
+                    game.flag_no_mostrar_juego = False
+                    game.flag_mostrar_menu = True
+                    game.ventana_ranking.rect_image_salir_ranking.y = -1000
+                    game.fondo_menu.rect_marco_ranking.y = 520
                     print("salir de ranking")
 
-                if ventana_ingresar_nombre.rect_image_boton_play.collidepoint(mouse_x, mouse_y) and ventana_ingresar_nombre.flag_nombre == True:
-                    flag_ventana_ingresar_nombre = False
-                    ventana_ingresar_nombre.rect_image_boton_play.y = -1000
+                if game.ventana_ingresar_nombre.rect_image_boton_play.collidepoint(mouse_x, mouse_y) and game.ventana_ingresar_nombre.flag_nombre == True:
+                    game.flag_ventana_ingresar_nombre = False
+                    game.ventana_ingresar_nombre.rect_image_boton_play.y = -1000
                     print("Inicio de juego")
 
 
         #condicion para escribir el nombre en una ventana desp de darle start
         if event.type == pygame.KEYDOWN:
-            #flag_mostrar_menu == False and flag_no_mostrar_juego == False and flag_ranking == True and 
             if event.key == pygame.K_BACKSPACE:
-                ventana_ingresar_nombre.ingreso = ventana_ingresar_nombre.ingreso[0:-1]
+                game.ventana_ingresar_nombre.ingreso = game.ventana_ingresar_nombre.ingreso[0:-1]
             else:
-                ventana_ingresar_nombre.ingreso += event.unicode
+                game.ventana_ingresar_nombre.ingreso += event.unicode
 
     #mostrar MENU
-    if flag_mostrar_menu == True and flag_ranking == False and flag_no_mostrar_juego == False:#and flag_ranking == False puedo agregar esto quizas
-        #screen.fill((COLOR_BLANCO))
-        fondo_menu.draw(screen)
+    if game.flag_mostrar_menu == True and game.flag_ranking == False and game.flag_no_mostrar_juego == False:
+        game.fondo_menu.draw(screen)
         pygame.display.flip()
     
     #Mostrar RANKING
-    elif flag_mostrar_menu == False and flag_no_mostrar_juego == True and flag_ranking == True:
+    elif game.flag_mostrar_menu == False and game.flag_no_mostrar_juego == True and game.flag_ranking == True:
         screen.fill((COLOR_BLANCO))
-        ventana_ranking.draw(screen)
+        game.ventana_ranking.draw(screen)
         pygame.display.flip()
     
-        #mostrar INGRESAR NOMBRE
-    elif flag_ventana_ingresar_nombre == True and flag_mostrar_menu == False:
+    #mostrar INGRESAR NOMBRE
+    elif game.flag_ventana_ingresar_nombre == True and game.flag_mostrar_menu == False:
         screen.fill((GRIS))
-        #ventana_ingresar_nombre.draw(screen)
-        ventana_ingresar_nombre.update(screen)
-        #print(ventana_ingresar_nombre.ingreso)
+        game.ventana_ingresar_nombre.update(screen)
         pygame.display.flip()
 
     #mostrar JUEGO
-    elif flag_mostrar_menu == False and flag_no_mostrar_juego == False and flag_ventana_ingresar_nombre == False:
+    elif game.flag_mostrar_menu == False and game.flag_no_mostrar_juego == False and game.flag_ventana_ingresar_nombre == False:
 
         for enemigos in lista_naves_enemigas:
-            if enemigos.rect_imagen_enemiga.colliderect(game.rect) and enemigos not in enemigos_colisionados:
+            if enemigos.rect_imagen_enemiga.colliderect(game.nave_jugador.rect) and enemigos not in game.enemigos_colisionados:
                 # Verifica colisión entre nave principal y enemigo, y si el enemigo no está en la lista de colisiones previas
-                enemigos_colisionados.append(enemigos)  # Agrega el enemigo a la lista de colisiones
-                lives -= 1  # Resta una vida
+                game.enemigos_colisionados.append(enemigos)  # Agrega el enemigo a la lista de colisiones
+                game.lives -= 1  # Resta una vida
 
-        #Opcional
-        # Limpia la lista de colisiones para eliminar enemigos que ya no están colisionando con la nave principal
-        #enemigos_colisionados = [enemy for enemy in enemigos_colisionados if enemy.rect_imagen_enemiga.colliderect(game.rect)]
-
-        nivel.actualizar_nivel(score)
+        game.nivel.actualizar_nivel(game.score)
 
         screen.fill((GRIS))  # Limpia la pantalla
 
-        fondo.draw(screen)
+        game.fondo_juego.draw(screen)
 
         for disparo in disparos:
-            disparo.verificar_colision(score)
+            disparo.verificar_colision(game.score)
             disparo.update(screen)  # Actualiza la lógica de los disparos
 
         for bala_enemiga in lista_balas_enemigas:
             bala_enemiga.update(screen)
-            if bala_enemiga.rect_bala_enemiga.colliderect(game.rect):#Verifica si hay colision entre la nave principal y las balas enemigas
+            if bala_enemiga.rect_bala_enemiga.colliderect(game.nave_jugador.rect):#Verifica si hay colision entre la nave principal y las balas enemigas
                     bala_enemiga.flag = False
                     bala_enemiga.flag = bala_enemiga.flag
                     bala_enemiga.rect_bala_enemiga.y = -1000
                     bala_enemiga.rect_bala_enemiga.x = -1000
                     ######## OCURRE COLISION Y QUITA UN CORAZON ########
-                    lives -= 1
+                    game.lives -= 1
 
         for nave_enemiga in lista_naves_enemigas:
             nave_enemiga.update_enemigo(screen) # Actualiza la lógica de las naves enemigas
@@ -213,41 +218,28 @@ while True:
         for vida in lista_vidas:
             vida.update(screen)
 
-        game.update(screen)
+        game.nave_jugador.update(screen)
 
-        score.draw(screen)
+        game.score.draw(screen)
         
-        nivel.draw(screen)
+        game.nivel.draw(screen)
 
-        actualizar_vidas(lives)
+        actualizar_vidas(game.lives)
 
         #RESETEAR VALORES PARA JUGAR DE NUEVO
-        if lives <= 1 or score.value == 7000:
-            fondo_game_over.rect_image_volver_menu.y = 630
-            flag_no_mostrar_juego = True
-            lives = 4
-            score.value = 0
-            enemigos_colisionados[:] = []
-            nivel.nivel = 1
-            lista_naves_enemigas[:] = []
-            lista_balas_enemigas[:] = []
-            disparos[:] = []
-            for vida in lista_vidas:
-                vida.flag_vida = True
-            cantidad_naves_enemigas = 5
-            crear_naves_enemigas(cantidad_naves_enemigas)
-            game.rect.x = (ANCHO_VENTANA/2)
+        if game.lives <= 1 or game.score.value == 7000:
+            game.reiniciar_valores()
 
         pygame.display.flip()
         clock.tick(60)
 
     #Mostrar fin del juego
-    elif flag_no_mostrar_juego == True:
+    elif game.flag_no_mostrar_juego == True:
         screen.fill((COLOR_BLANCO))
         #mando a la mierda el marco de ranking
-        fondo_menu.rect_marco_ranking.y = -1000
+        game.fondo_menu.rect_marco_ranking.y = -1000
 
-        fondo_game_over.draw(screen)
+        game.fondo_game_over.draw(screen)
         ####
         pygame.display.flip()
         

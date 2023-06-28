@@ -3,13 +3,13 @@ from color import *
 
 class Ranking:
     def __init__(self) -> None:
-        self.image_salir_de_ranking = pygame.image.load("JUEGO PYGAME\imagenes\\retroceder_del_ranking.png")
+        self.image_salir_de_ranking = pygame.image.load("imagenes\\retroceder_del_ranking.png")
         self.image_salir_de_ranking = pygame.transform.scale(self.image_salir_de_ranking,(100,100))
         self.rect_image_salir_ranking = self.image_salir_de_ranking.get_rect()
         self.rect_image_salir_ranking.y = -1000
         self.rect_image_salir_ranking.x = 0
         ##puestos ranking
-        self.image_puestos_ranking = pygame.image.load("JUEGO PYGAME\imagenes\puestos_rank.png")
+        self.image_puestos_ranking = pygame.image.load("imagenes\puestos_rank.png")
         self.image_puestos_ranking = pygame.transform.scale(self.image_puestos_ranking,(600,600))
         self.rect_image_puestos_ranking = self.image_puestos_ranking.get_rect()
         self.rect_image_puestos_ranking.y = 200

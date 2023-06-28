@@ -7,7 +7,7 @@ class Fondo:
     def __init__(self) -> None:
         #Fondo
         #self.screen = screen
-        self.imagen_fondo = pygame.image.load("JUEGO PYGAME\imagenes\\fondo.png")
+        self.imagen_fondo = pygame.image.load("imagenes\\fondo.png")
         self.image = pygame.transform.scale(self.imagen_fondo,(ANCHO_VENTANA,ALTO_VENTANA))
         self.rect_fondo = self.imagen_fondo.get_rect()
 
@@ -19,13 +19,13 @@ class FondoGameOver(Fondo):
     def __init__(self) -> None:
         super().__init__()
         #imagen game over
-        self.image_game_over = pygame.image.load("JUEGO PYGAME\imagenes\\game_over2.png")#imagen de prueba game over
+        self.image_game_over = pygame.image.load("imagenes\\game_over2.png")#imagen de prueba game over
         self.image_game_over = pygame.transform.scale(self.image_game_over,(500,500))
         self.rect_fondo_game_over = self.image_game_over.get_rect()
         self.rect_fondo_game_over.x = 150
         self.rect_fondo_game_over.y = -100
         #imagen volver a inicio
-        self.image_volver_menu = pygame.image.load("JUEGO PYGAME\imagenes\\volver_al_menu.png")#imagen de prueba game over
+        self.image_volver_menu = pygame.image.load("imagenes\\volver_al_menu.png")#imagen de prueba game over
         self.image_volver_menu = pygame.transform.scale(self.image_volver_menu,(100,100))
         self.rect_image_volver_menu = self.image_volver_menu.get_rect()
         self.rect_image_volver_menu.x = 360
@@ -46,14 +46,14 @@ class Menu(Fondo):
     def __init__(self) -> None:
         super().__init__()
         #imagen marco start
-        self.imagen_marco_start = pygame.image.load("JUEGO PYGAME\imagenes\\marco_gamer.png")
+        self.imagen_marco_start = pygame.image.load("imagenes\\marco_gamer.png")
         self.imagen_marco_start = pygame.transform.scale(self.imagen_marco_start,(300,100))
         #imagen y rect de marco start
         self.rect_marco_start = self.imagen_marco_start.get_rect()
         self.rect_marco_start.x = 260
         self.rect_marco_start.y = 350
         #imagen y rect de marco ranking
-        self.imagen_marco_ranking = pygame.image.load("JUEGO PYGAME\imagenes\\marco_gamer.png")
+        self.imagen_marco_ranking = pygame.image.load("imagenes\\marco_gamer.png")
         self.imagen_marco_ranking = pygame.transform.scale(self.imagen_marco_ranking,(300,100))
         self.rect_marco_ranking = self.imagen_marco_ranking.get_rect()
         self.rect_marco_ranking.x = 260
