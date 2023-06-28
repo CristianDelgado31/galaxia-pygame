@@ -11,7 +11,7 @@ from clase_nave_principal import *
 from clase_disparo_nave_enemiga import*
 from clsae_disparo_nave_principal import *
 from funciones_vida import *
-from game import Game
+from clase_game import Game
 
 
 pygame.init()
